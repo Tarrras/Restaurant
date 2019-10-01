@@ -11,9 +11,9 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".activity.SignUpActivity" android:theme="@style/AppTheme.Dark">
+        <activity android:name=".activity.SignUpActivity" android:windowSoftInputMode="stateHidden" android:theme="@style/AppTheme.Dark">
         </activity>
-        <activity android:name=".activity.SignInActivity" android:theme="@style/AppTheme.Dark">
+        <activity android:name=".activity.SignInActivity" android:windowSoftInputMode="stateHidden" android:theme="@style/AppTheme.Dark">
         </activity>
         <activity
                 android:name=".activity.ScrollingActivity"

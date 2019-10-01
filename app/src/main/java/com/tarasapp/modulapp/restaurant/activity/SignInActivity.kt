@@ -7,24 +7,31 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import com.tarasapp.modulapp.restaurant.R
 import com.tarasapp.modulapp.restaurant.database.Firebase
 import kotlinx.android.synthetic.main.activity_sign_in.*
-
-
-
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.content.Context
+import android.graphics.Color
+import android.view.inputmethod.InputMethodManager
 
 
 class SignInActivity : AppCompatActivity() {
 
-    private val TAG = "LoginActivity"
-    private val REQUEST_SIGNUP = 0
-    private val auth = Firebase.getAuthInstance()
+    private val TAG = "AAA"
+    private val REQUEST_SIGNUP = -1
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
+        auth = Firebase.getAuthInstance()
+
+        input_password.setHintTextColor(Color.WHITE)
         btn_login.setOnClickListener { login() }
 
         link_signup.setOnClickListener {
@@ -36,6 +43,9 @@ class SignInActivity : AppCompatActivity() {
     }
 
     public fun login() {
+
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm!!.hideSoftInputFromWindow(this.currentFocus.windowToken, 0)
         Log.d(TAG, "Login")
 
         if (!validate()) {
@@ -46,7 +56,7 @@ class SignInActivity : AppCompatActivity() {
         btn_login.isEnabled = false
 
         val progressDialog = ProgressDialog(this,
-            R.style.AppTheme_Dark_Dialog)
+            com.tarasapp.modulapp.restaurant.R.style.AppTheme_Dark_Dialog)
         progressDialog.isIndeterminate = true
         progressDialog.setMessage("Authenticating...")
         progressDialog.show()
@@ -54,10 +64,41 @@ class SignInActivity : AppCompatActivity() {
         val password = input_password.text.toString()
 
 
+
         android.os.Handler().postDelayed(
             {
-                onLoginSuccess()
-                // onLoginFailed();
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success")
+                            val user = auth.currentUser
+                            onLoginSuccess()
+                            //updateUI(user)
+                        } else {
+                            try {
+                                throw task.exception!!
+                            } catch (invalidEmail: FirebaseAuthInvalidUserException) {
+                                Toast.makeText(baseContext,"Не правильно введена почта",Toast.LENGTH_LONG).show()
+
+                                // TODO: take your actions!
+                            } catch (wrongPassword: FirebaseAuthInvalidCredentialsException) {
+                                Toast.makeText(baseContext,"Пароль не верный!",Toast.LENGTH_LONG).show()
+
+                                // TODO: Take your action
+                            }
+//                            // if user enters wrong email.
+//                            // if user enters wrong password.
+//                            // If sign in fails, display a message to the user.
+//                            Log.w(TAG, "signInWithEmail:failure", task.exception)
+//                            Toast.makeText(baseContext, "Authentication failed.",
+//                                Toast.LENGTH_SHORT).show()
+//                            //updateUI(null)
+                            onLoginFailed()
+                        }
+
+                        // ...
+                    }
                 progressDialog.dismiss()
             }, 3000)
     }
@@ -74,17 +115,18 @@ class SignInActivity : AppCompatActivity() {
     }
 
     public override fun onBackPressed() {
-        // disable going back to the MainActivity
         moveTaskToBack(true)
+        finish()
     }
 
     public fun onLoginSuccess() {
         btn_login.isEnabled = true
-        finish()
+        val intent = Intent(applicationContext, CuisinesActivity::class.java)
+        startActivity(intent)
     }
 
     public fun onLoginFailed() {
-        Toast.makeText(baseContext, "Login failed", Toast.LENGTH_LONG).show()
+       // Toast.makeText(baseContext, "Login failed", Toast.LENGTH_LONG).show()
 
         btn_login.isEnabled = true
     }
@@ -102,8 +144,8 @@ class SignInActivity : AppCompatActivity() {
             input_email.error = null
         }
 
-        if (password.isEmpty() || password.length < 4 || password.length > 10) {
-            input_password.error = "between 4 and 10 alphanumeric characters"
+        if (password.isEmpty() || password.length < 4 ) {
+            input_password.error = "between 4 and 100 alphanumeric characters"
             valid = false
         } else {
             input_password.error = null
