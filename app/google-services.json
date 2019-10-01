@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "807073828914",
+    "firebase_url": "https://restaurant-cf7d4.firebaseio.com",
+    "project_id": "restaurant-cf7d4",
+    "storage_bucket": "restaurant-cf7d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807073828914:android:fa8bfe9674c23475576c2b",
+        "android_client_info": {
+          "package_name": "com.tarasapp.modulapp.restaurant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "807073828914-gscecued8m0pd4h4b0i20md2vri7rqev.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tarasapp.modulapp.restaurant",
+            "certificate_hash": "a1d487dbacc6b4408c5b86fc13dc0549d429332e"
+          }
+        },
+        {
+          "client_id": "807073828914-nf5s43ap4clr9lkmhad0snp6stmvdbfu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCC38dH8dpG7_9naPYJz95002ZKbU61eCI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "807073828914-nf5s43ap4clr9lkmhad0snp6stmvdbfu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
