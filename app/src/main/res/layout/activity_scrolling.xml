@@ -49,14 +49,22 @@
                         android:id="@+id/dish_title_toolbar"
                         android:textColor="@color/black"
                         android:textSize="20sp"
-                        android:layout_width="match_parent" android:layout_height="match_parent"
-                android:text="sss"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                />
             </androidx.appcompat.widget.Toolbar>
-
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_scrolling"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            app:layout_anchor="@id/app_bar"
+            app:layout_anchorGravity="bottom|end"
+            android:src="@drawable/ic_shopping_24dp"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

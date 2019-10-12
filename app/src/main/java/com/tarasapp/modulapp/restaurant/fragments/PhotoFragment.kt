@@ -2,21 +2,20 @@ package com.tarasapp.modulapp.restaurant.fragments
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
-
 import com.tarasapp.modulapp.restaurant.R
 import com.tarasapp.modulapp.restaurant.adapters.photoPager.ViewPagerAdapter
 import kotlinx.android.synthetic.main.fragment_photo.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-public const val photo1 = "photo1"
-public const val photo2 = "photo2"
-public const val photo3 = "photo3"
+const val photo1 = "photo1"
+const val photo2 = "photo2"
+const val photo3 = "photo3"
 
 
 class PhotoFragment : Fragment() {
@@ -37,6 +36,7 @@ class PhotoFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
         val pagerAdapter = context?.let { ViewPagerAdapter(it,mList) }
         viewPager.adapter = pagerAdapter
     }

@@ -2,27 +2,32 @@ package com.tarasapp.modulapp.restaurant.activity
 
 import android.app.ProgressDialog
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import com.arellomobile.mvp.MvpAppCompatActivity
+import com.arellomobile.mvp.presenter.InjectPresenter
 import com.google.firebase.auth.FirebaseAuth
 import com.tarasapp.modulapp.restaurant.R
 import com.tarasapp.modulapp.restaurant.database.Firebase
+import com.tarasapp.modulapp.restaurant.presenters.SignUpPresenter
+import com.tarasapp.modulapp.restaurant.views.SignUpView
 import kotlinx.android.synthetic.main.activity_sing_up.*
-import android.content.Intent
-import android.view.inputmethod.InputMethodManager
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException
-import androidx.fragment.app.FragmentActivity
+import java.util.*
 
 
-class SignUpActivity : AppCompatActivity() {
+class SignUpActivity : MvpAppCompatActivity(), SignUpView {
+    override fun showError(message: String) {
+        Toast.makeText(applicationContext,message, Toast.LENGTH_LONG).show()
+    }
 
     private val TAG = "AAA"
     private lateinit var auth: FirebaseAuth
+    private lateinit var city: String
+
+    @InjectPresenter
+    lateinit var presenter: SignUpPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +45,7 @@ class SignUpActivity : AppCompatActivity() {
     fun signup() {
 
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm!!.hideSoftInputFromWindow(this.currentFocus.windowToken, 0)
-        //Log.d(TAG, "Signup")
+        imm.hideSoftInputFromWindow(this.currentFocus.windowToken, 0)
         if (!validate())
         {
             onSignupFailed()
@@ -56,70 +60,41 @@ class SignUpActivity : AppCompatActivity() {
         val email = input_email.text.toString()
         val password = input_password.text.toString()
 
-        android.os.Handler().postDelayed(
-            {
-                auth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success")
-                            val user = auth.currentUser
-                            onSignupSuccess()
-                            //updateUI(user)
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                            try {
-                                throw task.exception!!
-                            } catch (weakPassword: FirebaseAuthWeakPasswordException) {
-                                Toast.makeText(baseContext,"Слабый пароль!",Toast.LENGTH_LONG).show()
-                            } catch (malformedEmail: FirebaseAuthInvalidCredentialsException) {
-                                Toast.makeText(baseContext,"Неправильная почта!",Toast.LENGTH_LONG).show()
-
-                            } catch (existEmail: FirebaseAuthUserCollisionException) {
-                                Toast.makeText(baseContext,"Пользователь с таким email уже существует!",Toast.LENGTH_LONG).show()
-                            }
-//                            // if user enters wrong email.
-//                            // if user enters wrong password.
-//                            Toast.makeText(baseContext, "Authentication failed.",
-//                                Toast.LENGTH_SHORT).show()
-                            onSignupFailed()
-                            //updateUI(null)
-                        }
-                    }
-
+        android.os.Handler().postDelayed({
+                presenter.createUser(email,password,this)
                 progressDialog.dismiss()
             }, 3000)
     }
 
-    fun onSignupSuccess() {
+    override fun onSignupSuccess() {
         btn_signup.isEnabled = true
+        val strs = input_name.text.toString().split(" ")
+        presenter.addUser(strs[0],strs[1], Date(),"Днепр",applicationContext)
         val intent = Intent()
         intent.putExtra("name", "wow")
         setResult(RESULT_OK, intent)
         finish()
     }
 
-    fun onSignupFailed() {
-        //Toast.makeText(baseContext, "Login failed", Toast.LENGTH_LONG).show()
+    override fun onSignupFailed() {
         btn_signup.isEnabled = true
     }
 
     fun validate():Boolean {
         var valid = true
-        //val name = _nameText.getText().toString()
+        val name = input_name.text.toString()
         val email = input_email.text.toString()
         val password = input_password.text.toString()
         val password_secondary = input_password_secondary.text.toString()
-//        if (name.isEmpty() || name.length < 3)
-//        {
-//            _nameText.setError("at least 3 characters")
-//            valid = false
-//        }
-//        else
-//        {
-//            _nameText.setError(null)
-//        }
+        if (name.isEmpty() || name.length < 3 )
+        {
+            input_name.error = "at least 3 characters"
+            valid = false
+        }
+        else
+        {
+            input_name.error = null
+        }
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches())
         {
             input_email.error = "enter a valid email address"
