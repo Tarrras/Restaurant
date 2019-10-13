@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".fragments.CuisinesListFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        tools:context=".activity.CuisinesActivity">
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:textAlignment="center"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"/>
+            android:layout_height="?attr/actionBarSize"
+            style="@style/ToolBarStyle.Event" android:gravity="center">
+        <TextView
+                android:textStyle="normal"
+                android:textSize="30sp"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/app_name"
+                android:gravity = "center"
+                android:id="@+id/toolbar_title" />
+    </androidx.appcompat.widget.Toolbar>
+    <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="?attr/actionBarSize"
+            android:id="@+id/recycler_cuisines"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </FrameLayout>
