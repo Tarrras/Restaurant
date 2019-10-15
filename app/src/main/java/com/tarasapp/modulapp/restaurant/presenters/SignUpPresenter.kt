@@ -47,7 +47,7 @@ class SignUpPresenter: MvpPresenter<SignUpView>() {
         val id =lib.child("users").push().key
         val telephonyManager: TelephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         val mMobileNo = telephonyManager.line1Number
-        val user = User(fName,lName,mMobileNo,date,"","Днепр")
+        val user = User(fName,lName,mMobileNo,date,"",city)
         id?.let { lib.child("users").child(it).setValue(user) }
     }
 }

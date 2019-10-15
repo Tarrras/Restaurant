@@ -2,6 +2,7 @@ package com.tarasapp.modulapp.restaurant.activity
 
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.google.android.material.appbar.AppBarLayout
@@ -41,18 +42,24 @@ class ScrollingActivity : MvpAppCompatActivity(), DishDetailsView {
 
         app_bar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             var isShow = false
+            var isFbaShow = true
             var scrollRange = -1
             override fun onOffsetChanged(p0: AppBarLayout?, p1: Int) {
                 if (scrollRange == -1) {
                     scrollRange = app_bar.totalScrollRange
                 }
                 if (scrollRange + p1 == 0) {
-                    dish_title_toolbar.text = ""
                     isShow = true
-                } else if (isShow) {
-                    dish_title_toolbar.text = "Restaurant"
+                }
+                else if (isShow) {
                     toolbar_layout.setCollapsedTitleTextColor(Color.BLACK)
                     isShow = false
+                }
+                if(scrollRange + p1 <= 100){
+                    fab_menu.hideMenu(false)
+                    isFbaShow = false
+                } else if(!isFbaShow){
+                    fab_menu.showMenu(true)
                 }
             }
 
@@ -69,6 +76,16 @@ class ScrollingActivity : MvpAppCompatActivity(), DishDetailsView {
     }
 
     override fun showDish(dish: Dish) {
+        toolbar_layout.isTitleEnabled = false
+        toolbarExp.title=""
+        fb_action1.setOnClickListener {
+            Toast.makeText(applicationContext,"1",Toast.LENGTH_LONG).show()
+            fab_menu.close(true)
+        }
+        fb_action2.setOnClickListener {
+            Toast.makeText(applicationContext,"2",Toast.LENGTH_LONG).show()
+            fab_menu.close(true)
+        }
         dish_title_tv.text = dish.names
         dish_description_tv.text = dish.description
         val fragment = PhotoFragment()
