@@ -6,12 +6,55 @@
         android:layout_height="match_parent"
         tools:context=".activity.ShoppingCartActivity" android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_cart"
+            style="@style/Toolbar">
+        <TextView
+                android:textStyle="normal"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAlignment="gravity"
+                android:layout_marginEnd="50dp"
+                android:text="Корзина"
+                android:gravity="center"
+                android:id="@+id/toolbar_title"/>
+    </androidx.appcompat.widget.Toolbar>
+
+    <com.miguelcatalan.materialsearchview.MaterialSearchView
+            android:id="@+id/search_view1"
             android:layout_width="match_parent"
-            android:layout_height="601dp" android:id="@+id/recyclerView"/>
+            android:layout_height="wrap_content"/>
+
+    <LinearLayout
+            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginBottom="70dp"
+            android:layout_height="match_parent">
+
+        <TextView
+                android:textColor="@color/black"
+                android:text="ОБЩАЯ ЦЕНА"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/recyclerViewCart"/>
+    </LinearLayout>
+
+
     <Button
+            android:textSize="15sp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="bottom"
+            android:background="@color/yellow"
             android:text="Button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/button"
-    />
+            android:layout_height="wrap_content"
+            android:id="@+id/booking"/>
 </FrameLayout>

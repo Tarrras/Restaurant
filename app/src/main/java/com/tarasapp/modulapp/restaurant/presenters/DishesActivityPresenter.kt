@@ -1,14 +1,11 @@
 package com.tarasapp.modulapp.restaurant.presenters
 
-import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.tarasapp.modulapp.restaurant.database.Firebase
-import com.tarasapp.modulapp.restaurant.models.Cuisine
 import com.tarasapp.modulapp.restaurant.models.Dish
 import com.tarasapp.modulapp.restaurant.views.DishesActivityView
 
@@ -31,7 +28,7 @@ class DishesActivityPresenter : MvpPresenter<DishesActivityView>() {
                     if(comment?.cuisine?.containsKey(cuisine)!!){
                         val elem = data.key?.let {
                             Dish(comment.imageUrl, comment.cuisine, comment.calories, comment.names,comment.description,
-                                it
+                                it,comment.price, comment.weight
                             )
                         }
                         elem.let { it?.let { it1 -> list.add(it1) } }

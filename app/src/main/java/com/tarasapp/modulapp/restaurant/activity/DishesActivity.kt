@@ -1,18 +1,14 @@
 package com.tarasapp.modulapp.restaurant.activity
 
 import android.content.Intent
-import android.media.Image
 import android.os.Bundle
 import android.view.Menu
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.miguelcatalan.materialsearchview.MaterialSearchView
-import com.squareup.picasso.Picasso
-import com.stfalcon.imageviewer.StfalconImageViewer
 import com.tarasapp.modulapp.restaurant.R
 import com.tarasapp.modulapp.restaurant.adapters.DishListAdapter
 import com.tarasapp.modulapp.restaurant.models.Dish
@@ -52,6 +48,8 @@ class DishesActivity : MvpAppCompatActivity(), DishesActivityView {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         val cuisine =intent.extras.getString("Bluda")
+        toolbar_title_dishes.text = cuisine
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         presenter.getListFromDatabase(cuisine)
         recyclerView = recycler
         dishListAdapter = DishListAdapter{

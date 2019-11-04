@@ -3,10 +3,9 @@ package com.tarasapp.modulapp.restaurant.views
 import com.arellomobile.mvp.MvpView
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
-import com.tarasapp.modulapp.restaurant.models.Dish
+import com.tarasapp.modulapp.restaurant.models.User
 
 @StateStrategyType(value = AddToEndSingleStrategy::class)
-interface DishDetailsView:MvpView {
-    fun showDish(dish: Dish)
-    fun showMessage(message: String)
+interface PersonalAreaFragmentView: MvpView {
+    fun showUser(user: User)
 }

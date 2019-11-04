@@ -30,7 +30,7 @@ class CuisinesActivity : AppCompatActivity() {
 
         tabLayout.getTabAt(0)?.setIcon(R.drawable.ic_home_black_24dp)
         tabLayout.getTabAt(1)?.setIcon(R.drawable.ic_location_on_black_24dp)
-        tabLayout.getTabAt(2)?.setIcon(R.drawable.ic_person_outline_black_24dp)
+        tabLayout.getTabAt(2)?.setIcon(R.drawable.ic_person_black_24dp)
     }
 
 }

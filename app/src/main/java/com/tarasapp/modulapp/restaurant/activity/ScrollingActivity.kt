@@ -22,9 +22,14 @@ const val nameOfDish = "nameOfDish"
 const val keyOfDish = "keyOfDish"
 
 class ScrollingActivity : MvpAppCompatActivity(), DishDetailsView {
+    override fun showMessage(message: String) {
+        Toast.makeText(applicationContext,message,Toast.LENGTH_LONG).show()
+    }
 
     @InjectPresenter
     lateinit var dishDetailsPresenter: DishDetailsPresenter
+
+    lateinit var key: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +41,7 @@ class ScrollingActivity : MvpAppCompatActivity(), DishDetailsView {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         toolbar_layout.isTitleEnabled = true
 //        val dish =intent.extras.getString(nameOfDish)
-        val key = intent.extras.getString(keyOfDish)
+        key = intent.extras.getString(keyOfDish)
         dishDetailsPresenter.showDishFromDatabase(key)
 
 
@@ -79,7 +84,7 @@ class ScrollingActivity : MvpAppCompatActivity(), DishDetailsView {
         toolbar_layout.isTitleEnabled = false
         toolbarExp.title=""
         fb_action1.setOnClickListener {
-            Toast.makeText(applicationContext,"1",Toast.LENGTH_LONG).show()
+            dishDetailsPresenter.addItemToBase(keyOfDish = key)
             fab_menu.close(true)
         }
         fb_action2.setOnClickListener {

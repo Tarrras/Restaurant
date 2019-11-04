@@ -7,11 +7,10 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import com.tarasapp.modulapp.restaurant.R
 import com.tarasapp.modulapp.restaurant.adapters.DishListAdapter.MyViewHolder
 import com.tarasapp.modulapp.restaurant.models.Dish
 import kotlinx.android.synthetic.main.dish_row_item.view.*
-import android.text.method.TextKeyListener.clear
-import com.tarasapp.modulapp.restaurant.R
 
 
 class DishListAdapter(val itemClick: (Dish)-> Unit): RecyclerView.Adapter<MyViewHolder>(), Filterable {
@@ -77,12 +76,16 @@ class DishListAdapter(val itemClick: (Dish)-> Unit): RecyclerView.Adapter<MyView
     class MyViewHolder(itemView: View, val itemClick: (Dish)-> Unit): RecyclerView.ViewHolder(itemView) {
         val dishImg = itemView.dish_image_id
         val dishDesc = itemView.dish_row_desc
+        val weightDesc = itemView.weight_desc
+        val priceDesc = itemView.dish_cost
         fun bindItem(dish: Dish){
             with(dish){
                 Picasso.with(itemView.context)
                     .load(dish.imageUrl["avatar"])
                     .error(R.drawable.ic_launcher_background)
                     .into(dishImg)
+                weightDesc.text = dish.weight.toString()
+                priceDesc.text = dish.price.toString()
                 dishDesc.text = dish.names
                 itemView.setOnClickListener{itemClick(this)}
             }

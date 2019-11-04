@@ -9,8 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseAuthException
 import com.tarasapp.modulapp.restaurant.R
 import com.tarasapp.modulapp.restaurant.database.Firebase
 import kotlinx.android.synthetic.main.activity_sign_in.*
@@ -69,10 +68,8 @@ class SignInActivity : AppCompatActivity() {
                         } else {
                             try {
                                 throw task.exception!!
-                            } catch (invalidEmail: FirebaseAuthInvalidUserException) {
-                                Toast.makeText(baseContext,"Не правильно введена почта",Toast.LENGTH_LONG).show()
-                            } catch (wrongPassword: FirebaseAuthInvalidCredentialsException) {
-                                Toast.makeText(baseContext,"Пароль не верный!",Toast.LENGTH_LONG).show()
+                            } catch (invalidEmail: FirebaseAuthException) {
+                                Toast.makeText(baseContext,"Не правильно введена почта или пароль!",Toast.LENGTH_LONG).show()
                             }
                             onLoginFailed()
                         }

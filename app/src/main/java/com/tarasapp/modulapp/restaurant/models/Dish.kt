@@ -6,5 +6,7 @@ data class Dish(
     val calories: Int=0,
     val names: String="",
     val description: String="",
-    val key: String=""
+    val key: String="",
+    val price: Int=0,
+    val weight: Int=0
 )

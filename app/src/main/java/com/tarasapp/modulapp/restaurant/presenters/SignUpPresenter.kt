@@ -30,7 +30,7 @@ class SignUpPresenter: MvpPresenter<SignUpView>() {
                     } catch (weakPassword: FirebaseAuthWeakPasswordException) {
                         viewState.showError("Слабый пароль!")
                     } catch (malformedEmail: FirebaseAuthInvalidCredentialsException) {
-                        viewState.showError("Неправильная почтп")
+                        viewState.showError("Неправильно введена почта!")
                     } catch (existEmail: FirebaseAuthUserCollisionException) {
                         viewState.showError("Пользователь с таким email уже существует!!")
                     }
@@ -42,12 +42,13 @@ class SignUpPresenter: MvpPresenter<SignUpView>() {
     @SuppressLint("MissingPermission")
     fun addUser(fName: String, lName: String, date: Date, city: String, context: Context){
         val database = Firebase.getInstance()
+        val auth = Firebase.getAuthInstance().currentUser
 
         val lib = database.reference
         val id =lib.child("users").push().key
         val telephonyManager: TelephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         val mMobileNo = telephonyManager.line1Number
-        val user = User(fName,lName,mMobileNo,date,"",city)
+        val user = auth?.email?.let { auth.uid.let { it1 -> User("sss",city,date, it,fName, it1,lName,mMobileNo) } }
         id?.let { lib.child("users").child(it).setValue(user) }
     }
 }

@@ -3,9 +3,8 @@ package com.tarasapp.modulapp.restaurant.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +13,7 @@ import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.tarasapp.modulapp.restaurant.R
 import com.tarasapp.modulapp.restaurant.activity.DishesActivity
+import com.tarasapp.modulapp.restaurant.activity.ShoppingCartActivity
 import com.tarasapp.modulapp.restaurant.adapters.CuisinesListAdapter
 import com.tarasapp.modulapp.restaurant.models.Cuisine
 import com.tarasapp.modulapp.restaurant.models.Dish
@@ -38,24 +38,28 @@ class CuisinesListFragment : MvpAppCompatFragment(), CuisinesActivityView {
     }
 
     override fun showError(message: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(context,message,Toast.LENGTH_SHORT).show()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_cuisines_list, container, false)
-        toolbar = view.findViewById(R.id.toolbar)
+        toolbar = view.findViewById(R.id.toolbarS)
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(false)
         // Inflate the layout for this fragment
         return view
     }
 
     override fun onResume() {
         super.onResume()
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         presenter.getListFromDatabase()
         recyclerView = recycler_cuisines
         cuisinesListAdapter = CuisinesListAdapter {
@@ -68,8 +72,27 @@ class CuisinesListFragment : MvpAppCompatFragment(), CuisinesActivityView {
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = RecyclerView.VERTICAL
         recyclerView.layoutManager = layoutManager
+//        val decorator = DividerItemDecoration(context , layoutManager.orientation)
+//        recyclerView.addItemDecoration(decorator)
+
         recyclerView.adapter = cuisinesListAdapter
         cuisinesListAdapter.notifyDataSetChanged()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.tothe_cart_menu,menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId){
+            R.id.to_cart_item -> {
+                val intent = Intent(context,ShoppingCartActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
+    }
 }

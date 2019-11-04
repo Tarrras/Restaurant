@@ -6,11 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.tarasapp.modulapp.restaurant.R
-import com.tarasapp.modulapp.restaurant.adapters.DishListAdapter.MyViewHolder
 import com.tarasapp.modulapp.restaurant.models.Cuisine
-import com.tarasapp.modulapp.restaurant.models.Dish
 import kotlinx.android.synthetic.main.cuisine_row_item.view.*
-import kotlinx.android.synthetic.main.dish_row_item.view.*
 
 class CuisinesListAdapter(val itemClick: (Cuisine)-> Unit): RecyclerView.Adapter<CuisinesListAdapter.MyViewHolderTwo>() {
     private var mList:ArrayList<Cuisine> = ArrayList()
@@ -34,8 +31,10 @@ class CuisinesListAdapter(val itemClick: (Cuisine)-> Unit): RecyclerView.Adapter
 
     class MyViewHolderTwo(itemView: View, val itemClick: (Cuisine)-> Unit): RecyclerView.ViewHolder(itemView) {
         val cuisineDesc = itemView.cuisine_row_desc
+        val image = itemView.card_view_image
         fun bindItem(cuisine: Cuisine){
             with(cuisine){
+                Picasso.with(itemView.context).load(cuisine.imageUrl).into(image)
                 cuisineDesc.text = cuisine.name
                 itemView.setOnClickListener{itemClick(this)}
             }

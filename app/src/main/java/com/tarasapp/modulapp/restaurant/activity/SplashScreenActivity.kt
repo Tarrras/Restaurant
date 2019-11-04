@@ -13,7 +13,7 @@ class SplashScreenActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         val splash = EasySplashScreen(this)
             .withFullScreen()
-            .withTargetActivity(CuisinesActivity::class.java)
+            .withTargetActivity(SignInActivity::class.java)
             .withSplashTimeOut(2000)
             .withBackgroundColor(Color.parseColor("#E12929"))
             .withLogo(R.mipmap.ic_launcher)
