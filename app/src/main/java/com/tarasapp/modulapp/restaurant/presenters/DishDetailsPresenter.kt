@@ -37,13 +37,10 @@ class DishDetailsPresenter : MvpPresenter<DishDetailsView>() {
 
             override fun onDataChange(p0: DataSnapshot) {
                 val dishName = p0.key
-                val cart = userId?.let {
-                    if (dishName != null) {
-                        UserCart(2,it,dishName)
-                    }
-                }
+                val cart = userId?.let { dishName?.let { it1 -> UserCart(2, it, it1) } }
                 id?.let { lib.child("cart").child(it).setValue(cart) }
             }
+
         })
         viewState.showMessage("Добавленно!")
     }
