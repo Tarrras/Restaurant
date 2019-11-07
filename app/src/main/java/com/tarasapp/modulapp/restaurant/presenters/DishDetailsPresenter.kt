@@ -36,8 +36,12 @@ class DishDetailsPresenter : MvpPresenter<DishDetailsView>() {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                val dishName = p0.getValue(Dish::class.java)!!.names
-                val cart = userId?.let { UserCart(2,it,dishName) }
+                val dishName = p0.key
+                val cart = userId?.let {
+                    if (dishName != null) {
+                        UserCart(2,it,dishName)
+                    }
+                }
                 id?.let { lib.child("cart").child(it).setValue(cart) }
             }
         })

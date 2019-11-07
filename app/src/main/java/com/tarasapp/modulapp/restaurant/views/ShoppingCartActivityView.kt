@@ -6,6 +6,5 @@ import com.tarasapp.modulapp.restaurant.models.Dish
 interface ShoppingCartActivityView: MvpView {
     fun showList(mList: List<Dish>)
     fun showEmptyList()
-    fun deleteItem(itemId: String)
-    fun goBooking()
+    fun deleteItems()
 }

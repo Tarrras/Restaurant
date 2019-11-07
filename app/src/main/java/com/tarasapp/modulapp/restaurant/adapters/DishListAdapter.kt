@@ -75,9 +75,9 @@ class DishListAdapter(val itemClick: (Dish)-> Unit): RecyclerView.Adapter<MyView
 
     class MyViewHolder(itemView: View, val itemClick: (Dish)-> Unit): RecyclerView.ViewHolder(itemView) {
         val dishImg = itemView.dish_image_id
-        val dishDesc = itemView.dish_row_desc
-        val weightDesc = itemView.weight_desc
-        val priceDesc = itemView.dish_cost
+        val dishDesc = itemView.dish_desc
+        val weightDesc = itemView.dish_weight_desc
+        val priceDesc = itemView.dish_price
         fun bindItem(dish: Dish){
             with(dish){
                 Picasso.with(itemView.context)

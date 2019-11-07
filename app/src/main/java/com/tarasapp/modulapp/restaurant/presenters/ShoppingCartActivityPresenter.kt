@@ -48,11 +48,11 @@ class ShoppingCartActivityPresenter: MvpPresenter<ShoppingCartActivityView>(){
                 for (data in p0.children) {
                     val comment = data.getValue(Dish::class.java)
                     if (comment != null) {
-                        if(list.containsKey(comment.names)){
+                        if(list.containsKey(data.key)){
                             val elem = data.key?.let {
                                 Dish(comment.imageUrl, comment.cuisine,
                                     comment.calories, comment.names,comment.description,
-                                    it
+                                    it, comment.price, comment.weight
                                 )
                             }
                             elem.let { it?.let { it1 -> dishList.add(it1) } }
