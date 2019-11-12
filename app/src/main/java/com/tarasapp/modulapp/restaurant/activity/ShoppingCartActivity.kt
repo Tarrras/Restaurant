@@ -10,14 +10,26 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.miguelcatalan.materialsearchview.MaterialSearchView
 import com.tarasapp.modulapp.restaurant.R
 import com.tarasapp.modulapp.restaurant.adapters.DishCartListAdapter
+import com.tarasapp.modulapp.restaurant.fragments.BottomCartFragment
+import com.tarasapp.modulapp.restaurant.fragments.BottomSheetListener
+import com.tarasapp.modulapp.restaurant.models.CartDish
 import com.tarasapp.modulapp.restaurant.models.Dish
 import com.tarasapp.modulapp.restaurant.presenters.ShoppingCartActivityPresenter
 import com.tarasapp.modulapp.restaurant.views.ShoppingCartActivityView
 import kotlinx.android.synthetic.main.activity_shopping_kart.*
 
-class ShoppingCartActivity : MvpAppCompatActivity(), ShoppingCartActivityView {
-    override fun deleteItems() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+class ShoppingCartActivity : MvpAppCompatActivity(), ShoppingCartActivityView, BottomSheetListener {
+    override fun updateList(position: Int, count: Int, key: String) {
+        dishListAdapter.mList.find { it.dish.key == key }?.count = count
+        dishListAdapter.notifyItemChanged(position)
+    }
+
+    override fun changeCount(count: Int, key: String, position: Int) {
+        presenter.updateCount(count, key,position)
+    }
+
+    override fun deleteItems(position: Int) {
+        dishListAdapter.deleteItem(position)
     }
 
     lateinit var recyclerView: RecyclerView
@@ -51,13 +63,17 @@ class ShoppingCartActivity : MvpAppCompatActivity(), ShoppingCartActivityView {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         presenter.getCartList()
         recyclerView = recyclerViewCart
-        dishListAdapter = DishCartListAdapter{
-//            val intent = Intent(applicationContext,ScrollingActivity::class.java)
-//            val bundle = Bundle()
-//            bundle.putString(keyOfDish,it.key)
-//            intent.putExtras(bundle)
-//            startActivity(intent)
-        }
+        dishListAdapter = DishCartListAdapter ({ dish: Dish, i: Int ->
+            presenter.deleteItem(dish.key , i)
+        },{ cartDish: CartDish, i: Int ->
+            val fragment = BottomCartFragment()
+            val bundle = Bundle()
+            bundle.putInt("count", cartDish.count)
+            bundle.putString("key", cartDish.dish.key)
+            bundle.putInt("position", i)
+            fragment.arguments = bundle
+            fragment.show(supportFragmentManager,"editfragment")
+        })
         val layoutManager = LinearLayoutManager(applicationContext)
         layoutManager.orientation = RecyclerView.VERTICAL
         recyclerView.layoutManager = layoutManager
@@ -84,12 +100,13 @@ class ShoppingCartActivity : MvpAppCompatActivity(), ShoppingCartActivityView {
                 if (dishListAdapter.itemCount == 0){
                     recyclerView.visibility = View.GONE
                     empty_list_tv.visibility = View.VISIBLE
+                    booking.isClickable = false
                 }
             }
         })
     }
 
-    override fun showList(mList: List<Dish>) {
+    override fun showList(mList: List<CartDish>) {
         empty_list_tv.visibility = View.GONE
         dishListAdapter.setupList(mList)
         dishListAdapter.notifyDataSetChanged()

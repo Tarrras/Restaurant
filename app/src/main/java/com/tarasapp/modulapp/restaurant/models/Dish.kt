@@ -8,5 +8,6 @@ data class Dish(
     val description: String="",
     val key: String="",
     val price: Int=0,
-    val weight: Int=0
+    val weight: Int=0,
+    val count: Int = 1
 )

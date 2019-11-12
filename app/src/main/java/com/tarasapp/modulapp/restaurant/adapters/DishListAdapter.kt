@@ -84,7 +84,7 @@ class DishListAdapter(val itemClick: (Dish)-> Unit): RecyclerView.Adapter<MyView
                     .load(dish.imageUrl["avatar"])
                     .error(R.drawable.ic_launcher_background)
                     .into(dishImg)
-                weightDesc.text = dish.weight.toString()
+                weightDesc.text = dish.weight.toString() + " гр"
                 priceDesc.text = dish.price.toString()
                 dishDesc.text = dish.names
                 itemView.setOnClickListener{itemClick(this)}

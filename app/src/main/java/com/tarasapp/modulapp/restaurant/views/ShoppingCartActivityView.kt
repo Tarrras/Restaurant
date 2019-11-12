@@ -1,10 +1,11 @@
 package com.tarasapp.modulapp.restaurant.views
 
 import com.arellomobile.mvp.MvpView
-import com.tarasapp.modulapp.restaurant.models.Dish
+import com.tarasapp.modulapp.restaurant.models.CartDish
 
 interface ShoppingCartActivityView: MvpView {
-    fun showList(mList: List<Dish>)
+    fun showList(mList: List<CartDish>)
     fun showEmptyList()
-    fun deleteItems()
+    fun updateList(position: Int, count: Int, key: String)
+    fun deleteItems(position: Int)
 }
