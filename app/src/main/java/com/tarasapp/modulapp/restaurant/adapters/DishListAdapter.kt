@@ -82,7 +82,7 @@ class DishListAdapter(val itemClick: (Dish)-> Unit): RecyclerView.Adapter<MyView
             with(dish){
                 Picasso.with(itemView.context)
                     .load(dish.imageUrl["avatar"])
-                    .error(R.drawable.ic_launcher_background)
+                    .error(R.drawable.ic_image_black_24dp)
                     .into(dishImg)
                 weightDesc.text = dish.weight.toString() + " гр"
                 priceDesc.text = dish.price.toString()

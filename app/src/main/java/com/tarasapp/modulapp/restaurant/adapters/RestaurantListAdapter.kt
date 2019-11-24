@@ -35,7 +35,8 @@ class RestaurantListAdapter(val itemClick: (Restaurant)-> Unit): RecyclerView.Ad
         val ratingView = itemView.raiting_bar_id
         fun bindItem(cuisine: Restaurant){
             with(cuisine){
-                Picasso.with(itemView.context).load(cuisine.imageUrl).into(image)
+                Picasso.with(itemView.context).load(cuisine.imageUrl)
+                    .error(R.drawable.ic_image_black_24dp).into(image)
                 address.text = cuisine.street + ", " + cuisine.houseL.toString()
                 ratingView.numStars = 5
                 ratingView.rating = cuisine.rating

@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.tarasapp.modulapp.restaurant.R
-import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_bottom_cart.*
 
 
@@ -39,15 +38,26 @@ class BottomCartFragment : BottomSheetDialogFragment() {
             dismiss()
         }
 
-        Observable.create<Int> { emitter ->
-            action_minus_bt.setOnClickListener {
-                emitter.onNext(--myCount)
-            }
-        }.mergeWith(Observable.create<Int> { emitter ->
-                action_plus_bt.setOnClickListener {
-                    emitter.onNext(++myCount)
-                }
-            }).subscribe { s -> count_edit_tv.text = s.toString() }
+        action_minus_bt.setOnClickListener {
+            if (myCount > 1)
+                count_edit_tv.text = (--myCount).toString()
+        }
+        action_plus_bt.setOnClickListener {
+            count_edit_tv.text = (++myCount).toString()
+        }
+
+//        Observable.create<Int> { emitter ->
+//            action_minus_bt.setOnClickListener {
+//                emitter.onNext(myCount)
+//            }
+//        }.filter { s -> s > 1 }
+//            .map { s -> s - 1 }
+//            .mergeWith(Observable.create<Int> { emitter ->
+//                action_plus_bt.setOnClickListener {
+//                    emitter.onNext(++myCount)
+//                }
+//            })
+//            .subscribe { s -> count_edit_tv.text = s.toString() }
 
     }
 

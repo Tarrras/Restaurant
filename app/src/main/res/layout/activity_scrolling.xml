@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
             android:nestedScrollingEnabled="true"
-            android:translationY="-75dp"
+            android:translationY="-38dp"
             fab:menu_openDirection="up"
             app:layout_anchor="@+id/include"
             app:layout_anchorGravity="end|top"
@@ -85,13 +85,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/fb_action1"/>
-
-        <com.github.clans.fab.FloatingActionButton
-                app:fab_label="Добавить в избранное"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_bookmark_black_24dp"
-                android:id="@+id/fb_action2"/>
 
     </com.github.clans.fab.FloatingActionMenu>
 

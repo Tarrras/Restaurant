@@ -33,4 +33,13 @@ class CuisinesActivity : AppCompatActivity() {
         tabLayout.getTabAt(2)?.setIcon(R.drawable.ic_person_black_24dp)
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
+    }
+
+    override fun onBackPressed() {
+        finish()
+    }
+
 }

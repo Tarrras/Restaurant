@@ -19,9 +19,15 @@
                    android:layout_marginBottom="24dp"
                    android:layout_gravity="center_horizontal" />
 
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+            android:orientation="horizontal">
         <!--  Name Label -->
         <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
+                android:id="@+id/input_layout_fname"
+                android:gravity="left"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp">
@@ -29,22 +35,29 @@
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:inputType="textCapWords"
-                      android:hint="Name" />
+                      android:hint="Имя" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="City"/>-->
-
-        <!--<androidx.appcompat.widget.AppCompatSpinner-->
-                <!--android:textAlignment="textStart"-->
-                <!--android:tooltipText="Text"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"></androidx.appcompat.widget.AppCompatSpinner>-->
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_lname"
+                android:layout_marginStart="40dp"
+                android:layout_gravity="center"
+                android:gravity="right"
+                android:layout_width="145dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_lname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    android:hint="Фамилия" />
+        </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
 
         <!-- Email Label -->
         <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -58,6 +71,7 @@
 
         <!-- Password Label -->
         <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -66,10 +80,11 @@
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:inputType="textPassword"
-                      android:hint="Password"/>
+                      android:hint="Пароль"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_password_secondary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -78,7 +93,7 @@
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:inputType="textPassword"
-                      android:hint="Password again"/>
+                      android:hint="Пароль еще раз"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 

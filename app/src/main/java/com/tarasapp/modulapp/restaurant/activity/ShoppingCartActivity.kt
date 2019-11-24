@@ -1,5 +1,6 @@
 package com.tarasapp.modulapp.restaurant.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.Toolbar
@@ -18,10 +19,13 @@ import com.tarasapp.modulapp.restaurant.presenters.ShoppingCartActivityPresenter
 import com.tarasapp.modulapp.restaurant.views.ShoppingCartActivityView
 import kotlinx.android.synthetic.main.activity_shopping_kart.*
 
+
 class ShoppingCartActivity : MvpAppCompatActivity(), ShoppingCartActivityView, BottomSheetListener {
+
     override fun updateList(position: Int, count: Int, key: String) {
         dishListAdapter.mList.find { it.dish.key == key }?.count = count
         dishListAdapter.notifyItemChanged(position)
+        allprice_tv.text="Общая цена: " + countPrice().toString() + " UAH"
     }
 
     override fun changeCount(count: Int, key: String, position: Int) {
@@ -30,6 +34,15 @@ class ShoppingCartActivity : MvpAppCompatActivity(), ShoppingCartActivityView, B
 
     override fun deleteItems(position: Int) {
         dishListAdapter.deleteItem(position)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
+    }
+
+    override fun onBackPressed() {
+        finish()
     }
 
     lateinit var recyclerView: RecyclerView
@@ -97,6 +110,7 @@ class ShoppingCartActivity : MvpAppCompatActivity(), ShoppingCartActivityView, B
             }
 
             fun checkEmpty() {
+                allprice_tv.text="Общая цена: " + countPrice().toString() + " UAH"
                 if (dishListAdapter.itemCount == 0){
                     recyclerView.visibility = View.GONE
                     empty_list_tv.visibility = View.VISIBLE
@@ -104,6 +118,22 @@ class ShoppingCartActivity : MvpAppCompatActivity(), ShoppingCartActivityView, B
                 }
             }
         })
+
+        booking.setOnClickListener{
+            val intent = Intent(applicationContext, BookingActivity::class.java)
+            val bundle = Bundle()
+            bundle.putInt("price",countPrice())
+            intent.putExtras(bundle)
+            startActivity(intent)
+        }
+    }
+
+    fun countPrice(): Int{
+        var count = 0
+        for(data in dishListAdapter.mList){
+            count += data.count * data.dish.price
+        }
+        return count
     }
 
     override fun showList(mList: List<CartDish>) {
@@ -114,6 +144,8 @@ class ShoppingCartActivity : MvpAppCompatActivity(), ShoppingCartActivityView, B
     }
 
     override fun showEmptyList() {
+//        booking.backgroundTintList = ContextCompat.getColorStateList(this, R.color.colorPrimaryDark)
+        empty_list_tv.visibility = View.VISIBLE
         recyclerView.visibility = View.GONE
         booking.isClickable = false
     }

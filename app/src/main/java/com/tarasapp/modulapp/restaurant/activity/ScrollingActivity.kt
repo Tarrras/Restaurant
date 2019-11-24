@@ -60,7 +60,7 @@ class ScrollingActivity : MvpAppCompatActivity(), DishDetailsView {
                     toolbar_layout.setCollapsedTitleTextColor(Color.BLACK)
                     isShow = false
                 }
-                if(scrollRange + p1 <= 100){
+                if(scrollRange + p1 <= 110){
                     fab_menu.hideMenu(false)
                     isFbaShow = false
                 } else if(!isFbaShow){
@@ -85,10 +85,6 @@ class ScrollingActivity : MvpAppCompatActivity(), DishDetailsView {
         toolbarExp.title=""
         fb_action1.setOnClickListener {
             dishDetailsPresenter.addItemToBase(keyOfDish = key)
-            fab_menu.close(true)
-        }
-        fb_action2.setOnClickListener {
-            Toast.makeText(applicationContext,"2",Toast.LENGTH_LONG).show()
             fab_menu.close(true)
         }
         dish_title_tv.text = dish.names

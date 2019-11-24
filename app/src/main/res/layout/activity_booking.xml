@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_booking"
+            style="@style/Toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".activity.BookingActivity">
+
+            <com.google.android.material.button.MaterialButton
+                    app:layout_constraintHorizontal_bias="0.5"
+                    android:id="@+id/button_makeorder"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/primary_dark"
+                    android:text="Подтвердить"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:theme="@style/MaterialTheme"
+                    app:cornerRadius="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout_delivery" />
+
+            <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="match_parent"
+                    android:layout_height="66dp"
+                    android:gravity="center"
+                    android:text="Общая цена заказа: 0 UAH"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="#FF5252"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/name_et"
+                    android:layout_width="320dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/round_corner_toggle"
+                    android:hint="Имя"
+                    android:inputType="text"
+                    android:saveEnabled="true"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textColorHint="#ECCFBF"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email_et"
+                    android:layout_width="320dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/round_corner_toggle"
+                    android:hint="Email"
+                    android:saveEnabled="true"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textColorHint="#ECCFBF"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/name_et" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phone_et"
+                    android:layout_width="320dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/round_corner_toggle"
+                    android:hint="Телефон"
+                    android:inputType="phone"
+                    android:saveEnabled="true"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textColorHint="#ECCFBF"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/email_et" />
+
+            <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="236dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="44dp"
+                    android:text="Информация для связи"
+                    android:textAlignment="center"
+                    android:textColor="#109285"
+                    android:textSize="26sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.497"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinner"
+                    android:layout_width="320dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/round_corner_toggle"
+                    android:entries="@array/order"
+                    android:scrollbarSize="8dp"
+                    android:spinnerMode="dropdown"
+                    android:text="Доставка"
+                    android:textAlignment="center"
+                    android:theme="@style/mySpinnerItemStyle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/phone_et" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:visibility="gone"
+                    android:id="@+id/constraintLayout_delivery"
+                    android:layout_width="320dp"
+                    android:layout_height="168dp"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spinner">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/street_et"
+                        android:layout_width="320dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/round_corner_toggle"
+                        android:hint="Улица"
+                        android:inputType="text"
+                        android:saveEnabled="true"
+                        android:singleLine="true"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textColorHint="#ECCFBF"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/house_et"
+                        android:layout_width="320dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="24dp"
+                        android:background="@drawable/round_corner_toggle"
+                        android:hint="Дом"
+                        android:inputType="number"
+                        android:saveEnabled="true"
+                        android:singleLine="true"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textColorHint="#ECCFBF"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/street_et" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/kvartira_et"
+                        android:layout_width="320dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="24dp"
+                        android:background="@drawable/round_corner_toggle"
+                        android:hint="Номер квартиры"
+                        android:inputType="number"
+                        android:saveEnabled="true"
+                        android:singleLine="true"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textColorHint="#ECCFBF"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/house_et" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

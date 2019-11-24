@@ -76,6 +76,7 @@ class ShoppingCartActivityPresenter : MvpPresenter<ShoppingCartActivityView>() {
         val list: ArrayList<CartDish> = ArrayList()
 
 
+
         val childEventListener = object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -91,7 +92,7 @@ class ShoppingCartActivityPresenter : MvpPresenter<ShoppingCartActivityView>() {
                         }
                     }
                 }
-                viewState.showList(list)
+                //viewState.showList(list)
             }
         }
 
@@ -122,6 +123,7 @@ class ShoppingCartActivityPresenter : MvpPresenter<ShoppingCartActivityView>() {
                             myMap[comment.dishId] = count
                             allbase.updateChildren(childUpdates)
                             viewState.updateList(position, count ,key)
+                            cart.removeEventListener(this)
                             userId = null
                         }
                     }
@@ -130,32 +132,5 @@ class ShoppingCartActivityPresenter : MvpPresenter<ShoppingCartActivityView>() {
         }
         cart.addValueEventListener(childEventListener)
 
-//        val childEventListener1 = object : ValueEventListener {
-//            override fun onCancelled(p0: DatabaseError) {
-//
-//            }
-//
-//            override fun onDataChange(p0: DataSnapshot) {
-//                for (data in p0.children) {
-//                    val comment = data.getValue(Dish::class.java)
-//                    if (comment != null) {
-//                        if (myMap.containsKey(data.key)) {
-//                            val elem = data.key?.let {
-//                                CartDish(Dish(
-//                                    comment.imageUrl, comment.cuisine,
-//                                    comment.calories, comment.names, comment.description,
-//                                    it, comment.price, comment.weight), myMap.getValue(it)
-//                                )
-//                            }
-//                            if (elem != null) {
-//                                viewState.updateList(position, elem)
-//                            }
-//                        }
-//                    }
-//                }
-//
-//            }
-//        }
-//        dishes.addValueEventListener(childEventListener1)
     }
 }

@@ -48,19 +48,63 @@ class EditUserActivity : MvpAppCompatActivity(), EditUserView {
 
         fab_ok.setOnClickListener {
             val names = name_text_edit.text.toString().split(" ")
-            val user = User(photoPath,city_text_edit.text.toString(), Date(), email_user_edit.text.toString(), names[0], idUser, names[1], phone_user_edit.text.toString())
+            val user = User(
+                photoPath,
+                city_text_edit.text.toString(),
+                Date(),
+                email_user_edit.text.toString(),
+                names[0],
+                idUser,
+                names[1],
+                phone_user_edit.text.toString()
+            )
             editUserPresenter.updateUser(user)
         }
     }
 
+    fun validate(): Boolean {
+        var valid = true
+        val names = name_text_edit.text.toString()
+        val city = city_text_edit.text.toString()
+        val email = email_user_edit.text.toString()
+        val phone = phone_user_edit.text.toString()
+        if (names.isEmpty() || names.length < 3) {
+            name_text_edit.error = "Введите имя и фамилию верно!"
+            valid = false
+        } else {
+            name_text_edit.error = null
+        }
+        if (city.isEmpty() || city.length < 3) {
+            city_text_edit.error = "Введите как минимум 3 символа"
+            valid = false
+        } else {
+            city_text_edit.error = null
+        }
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            email_user_edit.error = "Вы ввели неверный Email"
+            valid = false
+        } else {
+            email_user_edit.error = null
+        }
+        if (phone.isEmpty() || phone.length != 10) {
+            phone_user_edit.error = "Неверно введен номер телефона!"
+            valid = false
+        } else {
+            phone_user_edit.error = null
+        }
+
+        return valid
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data)
-        {
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             val selectedImage = data.data
             val filePathColumn = arrayOf<String>(MediaStore.Images.Media.DATA)
-            val cursor = contentResolver.query(selectedImage,
-                filePathColumn, null, null, null)
+            val cursor = contentResolver.query(
+                selectedImage,
+                filePathColumn, null, null, null
+            )
             cursor.moveToFirst()
             val columnIndex = cursor.getColumnIndex(filePathColumn[0])
             val picturePath = cursor.getString(columnIndex)
@@ -71,14 +115,15 @@ class EditUserActivity : MvpAppCompatActivity(), EditUserView {
     }
 
     override fun updateUser() {
-        Toast.makeText(applicationContext,"Готово!",Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, "Готово!", Toast.LENGTH_SHORT).show()
         finish()
     }
 
     override fun showUser(user: User) {
         photoPath = user.avatarUrl
         val file = File(photoPath)
-        Picasso.with(applicationContext).load(file).error(R.drawable.ic_image_black_24dp).into(_image_id_edit)
+        Picasso.with(applicationContext).load(file).error(R.drawable.ic_image_black_24dp)
+            .into(_image_id_edit)
         email_user_edit.text = Editable.Factory.getInstance().newEditable(user.email)
         phone_user_edit.text = Editable.Factory.getInstance().newEditable(user.phone)
         val str = user.fname + " " + user.lname

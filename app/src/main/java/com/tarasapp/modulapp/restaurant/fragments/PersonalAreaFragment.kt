@@ -4,7 +4,9 @@ package com.tarasapp.modulapp.restaurant.fragments
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -12,6 +14,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.squareup.picasso.Picasso
 import com.tarasapp.modulapp.restaurant.R
 import com.tarasapp.modulapp.restaurant.activity.EditUserActivity
+import com.tarasapp.modulapp.restaurant.activity.SignInActivity
 import com.tarasapp.modulapp.restaurant.activity.idUser
 import com.tarasapp.modulapp.restaurant.models.User
 import com.tarasapp.modulapp.restaurant.presenters.PersonalAreaFragmentPresenter
@@ -28,6 +31,17 @@ class PersonalAreaFragment : MvpAppCompatFragment(), PersonalAreaFragmentView {
     private lateinit var userId: String
 
     override fun showUser(user: User) {
+        fb_edit.setOnClickListener {
+            val intent = Intent(context, EditUserActivity::class.java)
+            val bundle = Bundle()
+            bundle.putString(idUser, userId)
+            intent.putExtras(bundle)
+            startActivity(intent)
+        }
+        fb_logout.setOnClickListener {
+            val intent = Intent(context, SignInActivity::class.java)
+            startActivity(intent)
+        }
         val file = File(user.avatarUrl)
         Picasso.with(activity).load(file).error(R.drawable.ic_image_black_24dp).into(user_image)
         user_email.text = user.email
@@ -61,6 +75,7 @@ class PersonalAreaFragment : MvpAppCompatFragment(), PersonalAreaFragmentView {
         personalAreaFragmentPresenter.loadUser()
         app_bar_user.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             var isShow = false
+            var isFbaShow = true
             var scrollRange = -1
             override fun onOffsetChanged(p0: AppBarLayout?, p1: Int) {
                 if (scrollRange == -1) {
@@ -73,29 +88,35 @@ class PersonalAreaFragment : MvpAppCompatFragment(), PersonalAreaFragmentView {
                     toolbar_layout_user.setCollapsedTitleTextColor(Color.BLACK)
                     isShow = false
                 }
+                if(scrollRange + p1 <= 110){
+                    fab_menu_user.hideMenu(false)
+                    isFbaShow = false
+                } else if(!isFbaShow){
+                    fab_menu_user.showMenu(true)
+                }
             }
 
         })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.user_menu,menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
-            R.id.action_edit -> {
-                val intent = Intent(context, EditUserActivity::class.java)
-                val bundle = Bundle()
-                bundle.putString(idUser, userId)
-                intent.putExtras(bundle)
-                startActivity(intent)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.user_menu,menu)
+//        super.onCreateOptionsMenu(menu, inflater)
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return when(item.itemId){
+//            R.id.action_edit -> {
+//                val intent = Intent(context, EditUserActivity::class.java)
+//                val bundle = Bundle()
+//                bundle.putString(idUser, userId)
+//                intent.putExtras(bundle)
+//                startActivity(intent)
+//                true
+//            }
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
 
 
 }

@@ -37,6 +37,12 @@ class SignInActivity : AppCompatActivity() {
 
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
+    }
+
+
     fun login() {
 
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

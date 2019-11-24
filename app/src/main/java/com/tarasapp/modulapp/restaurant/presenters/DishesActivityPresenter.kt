@@ -35,59 +35,6 @@ class DishesActivityPresenter : MvpPresenter<DishesActivityView>() {
                     }
                 }
                 viewState.showList(list)
-//            override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
-//                Log.d(TAG, "onChildAdded:" + dataSnapshot.key!!)
-//                // A new comment has been added, add it to the displayed list
-////                for (snap in dataSnapshot.value) {
-//                    val comment = dataSnapshot.getValue(Dish::class.java)
-//                    val elem = comment?.imageUrl?.let { Dish(it,comment.cuisine,comment.calories,comment.names) }
-//                    elem?.let { list.add(it) }
-//
-//                //}
-//
-////                val comment = dataSnapshot.getValue(Dish::class.java)
-////                val elem = comment?.calories?.let { Dish(comment.imageUrl, it, da) }
-////                elem?.let { list.add(it) }
-////                viewState.showList(list)
-//
-//                viewState.showList(list)
-//            }
-//
-//            override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
-//                Log.d(TAG, "onChildChanged: ${dataSnapshot.key}")
-//
-//                // A comment has changed, use the key to determine if we are displaying this
-//                // comment and if so displayed the changed comment.
-//                val newComment = dataSnapshot.getValue(Dish::class.java)
-//                val commentKey = dataSnapshot.key
-//
-//                // ...
-//            }
-//
-//            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-//                Log.d(TAG, "onChildRemoved:" + dataSnapshot.key!!)
-//
-//                // A comment has changed, use the key to determine if we are displaying this
-//                // comment and if so remove it.
-//                val commentKey = dataSnapshot.key
-//
-//                // ...
-//            }
-//
-//            override fun onChildMoved(dataSnapshot: DataSnapshot, previousChildName: String?) {
-//                Log.d(TAG, "onChildMoved:" + dataSnapshot.key!!)
-//
-//                // A comment has changed position, use the key to determine if we are
-//                // displaying this comment and if so move it.
-//                val movedComment = dataSnapshot.getValue(Dish::class.java)
-//                val commentKey = dataSnapshot.key
-//
-//                // ...
-//            }
-//
-//            override fun onCancelled(databaseError: DatabaseError) {
-//                Log.w(TAG, "postComments:onCancelled", databaseError.toException())
-//            }
             }
         }
         dishes.addValueEventListener(childEventListener)

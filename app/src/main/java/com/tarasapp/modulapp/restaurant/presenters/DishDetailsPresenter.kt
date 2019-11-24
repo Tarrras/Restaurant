@@ -25,23 +25,47 @@ class DishDetailsPresenter : MvpPresenter<DishDetailsView>() {
     }
 
     fun addItemToBase(keyOfDish: String){
+        var isAdded = false
         val database = Firebase.getInstance().getReference("dishes")
+        val cart = Firebase.getInstance().getReference("cart")
         //var dish: Dish
         val userId = Firebase.getAuthInstance().currentUser?.uid
 
-        val lib = Firebase.getInstance().reference
-        val id =lib.child("cart").push().key
-        database.child(keyOfDish).addValueEventListener(object : ValueEventListener{
+        val childEventListener = object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
+
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                val dishName = p0.key
-                val cart = userId?.let { dishName?.let { it1 -> UserCart(1, it, it1) } }
-                id?.let { lib.child("cart").child(it).setValue(cart) }
+                for (data in p0.children) {
+                    val comment = data.getValue(UserCart::class.java)
+                    if (comment != null) {
+                        if(comment.dishId == keyOfDish && comment.userId == userId){
+                            isAdded = true
+                            cart.removeEventListener(this)
+                        }
+                    }
+                }
             }
+        }
+        cart.addValueEventListener(childEventListener)
 
-        })
-        viewState.showMessage("Добавленно!")
+        if (!isAdded) {
+            val lib = Firebase.getInstance().reference
+            val id =lib.child("cart").push().key
+            database.child(keyOfDish).addValueEventListener(object : ValueEventListener{
+                override fun onCancelled(p0: DatabaseError) {
+                    viewState.showMessage(p0.message)
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    val dishName = p0.key
+                    val cart = userId?.let { dishName?.let { it1 -> UserCart(1, it, it1) } }
+                    id?.let { lib.child("cart").child(it).setValue(cart) }
+                }
+
+            })
+        } else viewState.showMessage("Вы уже добавили этот товар в корзину!")
+
     }
 }

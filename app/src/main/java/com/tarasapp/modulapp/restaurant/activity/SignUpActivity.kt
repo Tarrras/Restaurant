@@ -68,8 +68,9 @@ class SignUpActivity : MvpAppCompatActivity(), SignUpView {
 
     override fun onSignupSuccess() {
         btn_signup.isEnabled = true
-        val strs = input_name.text.toString().split(" ")
-        presenter.addUser(strs[0],strs[1], Date(),"Днепр",applicationContext)
+        val strs = input_name.text.toString()
+        val strs1 = input_lname.text.toString()
+        presenter.addUser(strs,strs1, Date(),"Днепр",applicationContext)
         val intent = Intent()
         intent.putExtra("name", "wow")
         setResult(RESULT_OK, intent)
@@ -83,42 +84,63 @@ class SignUpActivity : MvpAppCompatActivity(), SignUpView {
     fun validate():Boolean {
         var valid = true
         val name = input_name.text.toString()
+        val lname = input_lname.text.toString()
         val email = input_email.text.toString()
         val password = input_password.text.toString()
         val password_secondary = input_password_secondary.text.toString()
-        if (name.isEmpty() || name.length < 3 )
+        if (name.isEmpty()|| name.length < 3  )
         {
-            input_name.error = "at least 3 characters"
+            input_layout_fname.error = "Введите как минимум 3 символа"
+           // input_name.error = "Введите как минимум 3 символа"
             valid = false
         }
         else
         {
+            input_layout_fname.error = null
+            input_name.error = null
+        }
+        if (lname.isEmpty() || lname.length < 3 )
+        {
+            input_layout_lname.error = "Введите как минимум 3 символа"
+            //input_lname.error = "Введите как минимум 3 символа"
+            valid = false
+        }
+        else
+        {
+            input_layout_lname.error = null
             input_name.error = null
         }
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches())
         {
-            input_email.error = "enter a valid email address"
+            input_layout_email.error = "Вы ввели неверный Email"
+            //input_email.error = "Вы ввели неверный Email"
             valid = false
         }
         else
         {
+            input_layout_email.error = null
             input_email.error = null
         }
         if (password.isEmpty() || password.length < 4 || password.length > 100)
         {
-            input_password.error = "between 4 and 100 alphanumeric characters"
+            input_layout_password.error = "Длина пароля должны быть как минимум 4 символа"
+            //input_password.error = "Длина пароля должны быть как минимум 4 символа"
             valid = false
         }
         else
         {
+            input_layout_password.error = null
             input_password.error = null
         }
         if(password_secondary != password){
-            input_password_secondary.error = "Wrong password"
+            input_layout_password_secondary.error = "Пароли не совпадают"
+//
+//            input_password_secondary.error = "Пароли не совпадают"
             valid = false
         }
         else
         {
+            input_layout_password_secondary.error = null
             input_password.error = null
         }
         return valid
